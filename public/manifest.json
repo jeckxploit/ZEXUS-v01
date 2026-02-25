@@ -1,0 +1,39 @@
+{
+  "name": "ZEXUS - Future of Digital Experience",
+  "short_name": "ZEXUS",
+  "description": "Experience the future of digital innovation. Where creativity meets technology in a stunning, futuristic interface.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "utilities", "technology"],
+  "shortcuts": [
+    {
+      "name": "Get Started",
+      "short_name": "Start",
+      "description": "Start your journey with ZEXUS",
+      "url": "/",
+      "icons": [
+        {
+          "src": "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}
