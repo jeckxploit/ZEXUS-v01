@@ -59,9 +59,9 @@ export async function sendEmail(options: EmailOptions): Promise<SendEmailResult 
     console.log('[Email] Email sent successfully:', data?.id);
     return {
       id: data!.id,
-      from: data!.from,
-      to: data!.to,
-      createdAt: data!.createdAt,
+      from,
+      to: Array.isArray(options.to) ? options.to : [options.to],
+      createdAt: new Date().toISOString(),
     };
   } catch (error) {
     console.error('[Email] Unexpected error:', error);

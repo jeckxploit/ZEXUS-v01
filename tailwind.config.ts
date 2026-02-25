@@ -9,6 +9,14 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    screens: {
+      xs: "480px",   // Extra small devices (landscape phones)
+      sm: "640px",   // Small devices (tablets)
+      md: "768px",   // Medium devices (tablets)
+      lg: "1024px",  // Large devices (desktops)
+      xl: "1280px",  // Extra large devices (large desktops)
+      "2xl": "1536px", // 2X Extra large devices
+    },
   	extend: {
   		colors: {
   			background: 'hsl(var(--background))',

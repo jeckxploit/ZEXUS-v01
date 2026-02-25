@@ -121,20 +121,96 @@
   * {
     border-color: theme('colors.border');
     outline-color: theme('colors.ring');
+    box-sizing: border-box; /* Ensure proper box sizing */
   }
   body {
     background-color: theme('colors.background');
     color: theme('colors.foreground');
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    width: 100%;
+    max-width: 100vw; /* Prevent overflow */
   }
   html {
     scroll-behavior: smooth;
+    width: 100%;
+    max-width: 100vw;
+  }
+  /* Prevent horizontal scroll on all elements */
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+  /* Ensure all elements respect container width */
+  * {
+    max-width: 100%;
   }
 }
 
 @layer utilities {
+  /* Mobile-first button utilities */
+  .btn-mobile-full {
+    @apply w-full sm:w-auto;
+  }
+  
+  /* Safe padding for mobile */
+  .safe-px {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+  
+  /* Responsive text sizes */
+  .text-responsive-xs {
+    @apply text-xs sm:text-sm;
+  }
+  .text-responsive-sm {
+    @apply text-sm sm:text-base;
+  }
+  .text-responsive-base {
+    @apply text-base sm:text-lg;
+  }
+  .text-responsive-lg {
+    @apply text-lg sm:text-xl;
+  }
+  .text-responsive-xl {
+    @apply text-xl sm:text-2xl;
+  }
+  .text-responsive-2xl {
+    @apply text-2xl sm:text-3xl;
+  }
+  .text-responsive-3xl {
+    @apply text-3xl sm:text-4xl;
+  }
+  .text-responsive-4xl {
+    @apply text-4xl sm:text-5xl;
+  }
+  
+  /* Stack columns on mobile */
+  .stack-mobile {
+    @apply flex flex-col gap-4 sm:flex-row sm:gap-6;
+  }
+  
+  /* Grid that stacks on mobile */
+  .grid-mobile {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6;
+  }
+  
+  /* Hide on mobile */
+  .hide-mobile {
+    @apply hidden sm:block;
+  }
+  
+  /* Show only on mobile */
+  .show-mobile {
+    @apply block sm:hidden;
+  }
+  
+  /* Touch-friendly spacing */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px]; /* WCAG touch target size */
+  }
+
   .text-gradient-custom {
     background: linear-gradient(to right, #22d3ee, #a855f7, #ec4899);
     -webkit-background-clip: text;

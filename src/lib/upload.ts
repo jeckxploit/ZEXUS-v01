@@ -79,7 +79,7 @@ export function validateFile(
   // Determine file type
   let detectedType: FileType | undefined;
   for (const [typeKey, config] of Object.entries(FILE_TYPE_CONFIGS)) {
-    if (config.allowed_types.includes(type)) {
+    if ((config.allowed_types as readonly string[]).includes(type)) {
       detectedType = typeKey as FileType;
       break;
     }
@@ -235,7 +235,7 @@ export function formatBytes(bytes: number, decimals = 2): string {
  */
 export function getFileType(mimeType: string): FileType | null {
   for (const [type, config] of Object.entries(FILE_TYPE_CONFIGS)) {
-    if (config.allowed_types.includes(mimeType)) {
+    if ((config.allowed_types as readonly string[]).includes(mimeType)) {
       return type as FileType;
     }
   }
@@ -245,7 +245,7 @@ export function getFileType(mimeType: string): FileType | null {
 /**
  * Get allowed MIME types for file type
  */
-export function getAllowedMimeTypes(type: FileType): string[] {
+export function getAllowedMimeTypes(type: FileType): readonly string[] {
   return FILE_TYPE_CONFIGS[type].allowed_types;
 }
 

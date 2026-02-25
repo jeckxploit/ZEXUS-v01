@@ -15,8 +15,10 @@ const outfit = Outfit({
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  minimumScale: 1,
   maximumScale: 1,
   userScalable: false,
+  viewportFit: "cover", // For notched devices
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#0a0a0a" },
     { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
@@ -29,14 +31,20 @@ export const metadata: Metadata = {
   keywords: ["ZEXUS", "futuristic", "innovation", "technology", "creative", "modern", "PWA"],
   authors: [{ name: "ZEXUS Team" }],
   icons: {
-    icon: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",
-    apple: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",
+    icon: "/icons/icon-192x192.svg",
+    apple: "/icons/icon-512x512.svg",
   },
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
     title: "ZEXUS",
+    startupImage: [
+      {
+        media: "(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)",
+        url: "/icons/icon-512x512.svg",
+      },
+    ],
   },
   openGraph: {
     title: "ZEXUS - Future of Digital Experience",
