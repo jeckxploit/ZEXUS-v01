@@ -24,33 +24,21 @@ export default function LiquidCursor() {
   const cursorX = useSpring(mouseX, springConfig)
   const cursorY = useSpring(mouseY, springConfig)
 
-  // Create trail springs with different physics for liquid effect
-  const trailSpringX1 = useSpring(mouseX, { damping: 37, stiffness: 190 })
-  const trailSpringY1 = useSpring(mouseY, { damping: 37, stiffness: 190 })
-  const trailSpringX2 = useSpring(mouseX, { damping: 34, stiffness: 180 })
-  const trailSpringY2 = useSpring(mouseY, { damping: 34, stiffness: 180 })
-  const trailSpringX3 = useSpring(mouseX, { damping: 31, stiffness: 170 })
-  const trailSpringY3 = useSpring(mouseY, { damping: 31, stiffness: 170 })
-  const trailSpringX4 = useSpring(mouseX, { damping: 28, stiffness: 160 })
-  const trailSpringY4 = useSpring(mouseY, { damping: 28, stiffness: 160 })
-  const trailSpringX5 = useSpring(mouseX, { damping: 25, stiffness: 150 })
-  const trailSpringY5 = useSpring(mouseY, { damping: 25, stiffness: 150 })
-  const trailSpringX6 = useSpring(mouseX, { damping: 22, stiffness: 140 })
-  const trailSpringY6 = useSpring(mouseY, { damping: 22, stiffness: 140 })
-  const trailSpringX7 = useSpring(mouseX, { damping: 19, stiffness: 130 })
-  const trailSpringY7 = useSpring(mouseY, { damping: 19, stiffness: 130 })
-  const trailSpringX8 = useSpring(mouseX, { damping: 16, stiffness: 120 })
-  const trailSpringY8 = useSpring(mouseY, { damping: 16, stiffness: 120 })
+  // Reduced from 8 to 4 trails for better performance
+  const trailSpringX1 = useSpring(mouseX, { damping: 34, stiffness: 180 })
+  const trailSpringY1 = useSpring(mouseY, { damping: 34, stiffness: 180 })
+  const trailSpringX2 = useSpring(mouseX, { damping: 28, stiffness: 160 })
+  const trailSpringY2 = useSpring(mouseY, { damping: 28, stiffness: 160 })
+  const trailSpringX3 = useSpring(mouseX, { damping: 22, stiffness: 140 })
+  const trailSpringY3 = useSpring(mouseY, { damping: 22, stiffness: 140 })
+  const trailSpringX4 = useSpring(mouseX, { damping: 16, stiffness: 120 })
+  const trailSpringY4 = useSpring(mouseY, { damping: 16, stiffness: 120 })
 
   const trailSprings = [
     { x: trailSpringX1, y: trailSpringY1 },
     { x: trailSpringX2, y: trailSpringY2 },
     { x: trailSpringX3, y: trailSpringY3 },
     { x: trailSpringX4, y: trailSpringY4 },
-    { x: trailSpringX5, y: trailSpringY5 },
-    { x: trailSpringX6, y: trailSpringY6 },
-    { x: trailSpringX7, y: trailSpringY7 },
-    { x: trailSpringX8, y: trailSpringY8 },
   ]
 
   useEffect(() => {

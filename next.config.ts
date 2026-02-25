@@ -53,6 +53,19 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true, // Required for PWA standalone mode
   },
+  // Performance optimizations
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production",
+  },
+  experimental: {
+    optimizePackageImports: [
+      "@react-three/fiber",
+      "@react-three/drei",
+      "framer-motion",
+      "three",
+      "lucide-react",
+    ],
+  },
 };
 
 const sentryWebpackPluginOptions = {

@@ -17,7 +17,7 @@ export default function ParticleBackground() {
   }, [])
 
   const particlesLoaded = async (container?: Container): Promise<void> => {
-    console.log('Particles loaded', container)
+    // Silent load - no console logs in production
   }
 
   const options: ISourceOptions = {
@@ -26,38 +26,23 @@ export default function ParticleBackground() {
         value: 'transparent',
       },
     },
-    fpsLimit: 120,
+    fpsLimit: 60, // Reduced from 120 for better performance
     interactivity: {
       events: {
         onClick: {
-          enable: true,
-          mode: 'push',
+          enable: false, // Disable for performance
         },
         onHover: {
           enable: true,
-          mode: 'grab',
+          mode: 'bubble', // Simpler than grab
         },
       },
       modes: {
-        push: {
-          quantity: 4,
-        },
-        grab: {
-          distance: 200,
-          links: {
-            opacity: 0.5,
-          },
-        },
         bubble: {
-          distance: 400,
-          size: 40,
-          duration: 2,
-          opacity: 8,
-          speed: 3,
-        },
-        repulse: {
-          distance: 200,
-          duration: 0.4,
+          distance: 300,
+          size: 20,
+          duration: 1,
+          opacity: 0.3,
         },
       },
     },
@@ -67,38 +52,42 @@ export default function ParticleBackground() {
       },
       links: {
         color: '#ffffff',
-        distance: 150,
+        distance: 120,
         enable: true,
-        opacity: 0.1,
-        width: 1,
+        opacity: 0.05, // Reduced opacity
+        width: 0.5, // Thinner links
       },
       move: {
         direction: 'none',
         enable: true,
         outModes: {
-          default: 'bounce',
+          default: 'out', // Faster than bounce
         },
         random: false,
-        speed: 1.5,
+        speed: 0.8, // Slower for calmer effect
         straight: false,
       },
       number: {
         density: {
           enable: true,
+          area: 800,
         },
-        value: 80,
+        value: 40, // Reduced from 80
       },
       opacity: {
-        value: 0.5,
+        value: 0.3, // Reduced from 0.5
       },
       shape: {
         type: 'circle',
       },
       size: {
-        value: { min: 1, max: 3 },
+        value: { min: 1, max: 2 }, // Smaller particles
       },
     },
     detectRetina: true,
+    backgroundMask: {
+      enable: false,
+    },
   }
 
   if (!init) {

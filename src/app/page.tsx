@@ -1,22 +1,23 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, memo, Suspense } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import { useInView } from 'framer-motion'
-import { useRef } from 'react'
-import LoadingScreen from '@/components/LoadingScreen'
-import ParticleBackground from '@/components/ParticleBackground'
-import LiquidCursor from '@/components/LiquidCursor'
-import HeroSection from '@/components/HeroSection'
-import FloatingElements from '@/components/FloatingElements'
+import dynamic from 'next/dynamic'
 import GlassCard from '@/components/GlassCard'
 import GradientButton from '@/components/GradientButton'
-
-import AIAssistantPage from '@/components/AIAssistantPage'
 import { Rocket, Shield, Zap, Layers, Sparkles, Code2, Palette, TrendingUp, Users, Award, Clock, Target, ArrowRight, Bot, MessageSquare, Menu, X } from 'lucide-react'
 
-// Responsive FeatureSection
-function FeatureSection() {
+// Dynamic imports for heavy components (lazy load)
+const LoadingScreen = dynamic(() => import('@/components/LoadingScreen'), { ssr: false })
+const ParticleBackground = dynamic(() => import('@/components/ParticleBackground'), { ssr: false })
+const LiquidCursor = dynamic(() => import('@/components/LiquidCursor'), { ssr: false })
+const HeroSection = dynamic(() => import('@/components/HeroSection'), { ssr: false })
+const FloatingElements = dynamic(() => import('@/components/FloatingElements'), { ssr: false })
+const AIAssistantPage = dynamic(() => import('@/components/AIAssistantPage'), { ssr: false, loading: () => <div className="fixed inset-0 bg-background z-50 flex items-center justify-center"><div className="text-muted-foreground">Loading...</div></div> })
+
+// Memoized FeatureSection
+const FeatureSection = memo(function FeatureSection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: false, margin: "-100px" })
 
@@ -110,7 +111,7 @@ function FeatureSection() {
 }
 
 // Responsive StatsSection
-function StatsSection() {
+const StatsSection = memo(function StatsSection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: false, margin: "-100px" })
 
@@ -160,7 +161,7 @@ function StatsSection() {
 }
 
 // Responsive ShowcaseSection
-function ShowcaseSection() {
+const ShowcaseSection = memo(function ShowcaseSection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: false, margin: "-100px" })
 
@@ -240,7 +241,7 @@ function ShowcaseSection() {
 }
 
 // Responsive CTASection
-function CTASection() {
+const CTASection = memo(function CTASection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: false, margin: "-100px" })
 
@@ -459,10 +460,11 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
   const [showAIAssistant, setShowAIAssistant] = useState(false)
 
+  // Quick loading - just wait for initial render
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false)
-    }, 3000)
+    }, 800) // Reduced from 3000ms to 800ms
 
     return () => clearTimeout(timer)
   }, [])
@@ -473,11 +475,15 @@ export default function Home() {
         {isLoading && <LoadingScreen />}
       </AnimatePresence>
 
-      <ParticleBackground />
-      <FloatingElements />
+      <Suspense fallback={null}>
+        <ParticleBackground />
+        <FloatingElements />
+      </Suspense>
 
       {/* Liquid cursor - desktop only */}
-      <LiquidCursor />
+      <Suspense fallback={null}>
+        <LiquidCursor />
+      </Suspense>
 
       {/* Navigation */}
       <AnimatePresence>
