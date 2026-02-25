@@ -4,7 +4,6 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "next-themes";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-import "@/lib/env"; // Validate environment variables on startup
 
 const outfit = Outfit({
   variable: "--font-outfit",
