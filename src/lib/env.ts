@@ -2,10 +2,10 @@ import { z } from "zod";
 
 // Define environment schema
 const envSchema = z.object({
-  // Required
-  DATABASE_URL: z.string().min(1, "DATABASE_URL is required"),
-  ZAI_API_KEY: z.string().min(1, "ZAI_API_KEY is required"),
-  
+  // Optional
+  DATABASE_URL: z.string().optional(),
+  ZAI_API_KEY: z.string().optional(),
+
   // Optional - NextAuth
   NEXTAUTH_URL: z.string().optional(),
   NEXTAUTH_SECRET: z.string().optional(),
