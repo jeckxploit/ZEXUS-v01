@@ -17,7 +17,7 @@ const FloatingElements = dynamic(() => import('@/components/FloatingElements'), 
 const AIAssistantPage = dynamic(() => import('@/components/AIAssistantPage'), { ssr: false, loading: () => <div className="fixed inset-0 bg-background z-50 flex items-center justify-center"><div className="text-muted-foreground">Loading...</div></div> })
 
 // Memoized FeatureSection
-const FeatureSection = memo(function FeatureSection() {
+const FeatureSection = memo(() => {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: false, margin: "-100px" })
 
@@ -111,7 +111,7 @@ const FeatureSection = memo(function FeatureSection() {
 }
 
 // Responsive StatsSection
-const StatsSection = memo(function StatsSection() {
+const StatsSection = memo(() => {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: false, margin: "-100px" })
 
@@ -161,7 +161,7 @@ const StatsSection = memo(function StatsSection() {
 }
 
 // Responsive ShowcaseSection
-const ShowcaseSection = memo(function ShowcaseSection() {
+const ShowcaseSection = memo(() => {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: false, margin: "-100px" })
 
@@ -241,7 +241,7 @@ const ShowcaseSection = memo(function ShowcaseSection() {
 }
 
 // Responsive CTASection
-const CTASection = memo(function CTASection() {
+const CTASection = memo(() => {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: false, margin: "-100px" })
 

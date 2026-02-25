@@ -2,13 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { uploadFile, validateFile } from '@/lib/upload';
 import * as Sentry from '@sentry/nextjs';
 
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: '100MB',
-    },
-  },
-};
+// Note: bodyParser config deprecated in Next.js 16, using runtime instead
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 export async function POST(request: NextRequest) {
   try {
