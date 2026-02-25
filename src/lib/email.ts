@@ -1,8 +1,20 @@
 import { Resend } from 'resend';
 import * as Sentry from '@sentry/nextjs';
 
-// Initialize Resend
-const resend = new Resend(process.env.RESEND_API_KEY || '');
+// Lazy initialize Resend - only create instance when needed
+let _resend: Resend | null = null;
+
+const getResend = () => {
+  if (!_resend) {
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      console.warn('[Email] RESEND_API_KEY not configured, email sending disabled');
+      return null;
+    }
+    _resend = new Resend(apiKey);
+  }
+  return _resend;
+};
 
 // Email types
 export type EmailType = 'welcome' | 'password-reset' | 'contact-form' | 'newsletter';
@@ -27,6 +39,12 @@ export interface SendEmailResult {
  * Send an email using Resend
  */
 export async function sendEmail(options: EmailOptions): Promise<SendEmailResult | null> {
+  const resend = getResend();
+  if (!resend) {
+    console.warn('[Email] Email service not configured');
+    return null;
+  }
+
   const from = process.env.EMAIL_FROM || 'ZEXUS <onboarding@resend.dev>';
 
   try {
@@ -40,7 +58,7 @@ export async function sendEmail(options: EmailOptions): Promise<SendEmailResult 
 
     if (error) {
       console.error('[Email] Failed to send email:', error);
-      
+
       // Capture error in Sentry
       Sentry.captureException(error, {
         tags: {
@@ -65,7 +83,7 @@ export async function sendEmail(options: EmailOptions): Promise<SendEmailResult 
     };
   } catch (error) {
     console.error('[Email] Unexpected error:', error);
-    
+
     Sentry.captureException(error, {
       tags: {
         feature: 'email',
@@ -85,7 +103,7 @@ export async function sendEmail(options: EmailOptions): Promise<SendEmailResult 
  */
 export async function sendWelcomeEmail(to: string, name: string) {
   const { WelcomeEmail } = await import('@/emails/welcome');
-  
+
   return sendEmail({
     to,
     subject: 'Welcome to ZEXUS! 🎉',
@@ -103,7 +121,7 @@ export async function sendPasswordResetEmail(
   resetUrl: string
 ) {
   const { PasswordResetEmail } = await import('@/emails/password-reset');
-  
+
   return sendEmail({
     to,
     subject: 'Reset Your Password - ZEXUS',
@@ -127,7 +145,7 @@ export async function sendContactFormEmail(
   message: string
 ) {
   const { ContactFormEmail } = await import('@/emails/contact-form');
-  
+
   return sendEmail({
     to,
     subject: `New Contact Form: ${subject}`,
@@ -150,14 +168,14 @@ export async function sendBulkEmails(
   // Process in batches to avoid rate limits
   for (let i = 0; i < recipients.length; i += batchSize) {
     const batch = recipients.slice(i, i + batchSize);
-    
+
     const batchPromises = batch.map(async (email) => {
       const result = await sendEmail({
         to: email,
         subject,
         react,
       });
-      
+
       if (result) {
         results.push(result);
       } else {
@@ -166,7 +184,7 @@ export async function sendBulkEmails(
     });
 
     await Promise.all(batchPromises);
-    
+
     // Wait between batches
     if (i + batchSize < recipients.length) {
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -176,5 +194,4 @@ export async function sendBulkEmails(
   return { results, errors };
 }
 
-export { resend };
-export default resend;
+export default getResend;
